@@ -20,7 +20,5 @@ function main {
     inform "Database is Created Successfully";
     inform "Execution Time: $(convert_readable_time ${SECONDS})";
     inform "[OP] End";
-
 }
-main
-$@
+main "${@}"
