@@ -1,0 +1,4 @@
+export _HOST_IP=10.0.2.15:10000
+export _HIVE_USER_NAME=
+export _HIVE_PASSWORD=
+export _REPORT_EXPORT_TO=

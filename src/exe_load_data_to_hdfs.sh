@@ -26,7 +26,6 @@ function main {
         exit 1;
     }
     
-
     inform "File is successfully insert into HDFS directory";
     inform "[OP ] END"
 }
