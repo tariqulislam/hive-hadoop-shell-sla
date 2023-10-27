@@ -1,0 +1,53 @@
+0: jdbc:hive2://10.0.2.15:10000/default> SET hive.exec.dynamic.partition.mode = nonstrict;
+0: jdbc:hive2://10.0.2.15:10000/default> SET hivevar:DATABASE_NAME=hive_shell_sample;
+0: jdbc:hive2://10.0.2.15:10000/default> SET hivevar:TBL_EMPLOYEE=${DATABASE_NAME}.employees;
+0: jdbc:hive2://10.0.2.15:10000/default> SET hivevar:TBL_DEPARTMENT=${DATABASE_NAME}.departments;
+0: jdbc:hive2://10.0.2.15:10000/default> SET hivevar:TBL_SALES_INFO=${DATABASE_NAME}.sales_info;
+0: jdbc:hive2://10.0.2.15:10000/default> WITH emp AS (
+. . . . . . . . . . . . . . . . . . . .>    SELECT
+. . . . . . . . . . . . . . . . . . . .>      emp.employee_id,
+. . . . . . . . . . . . . . . . . . . .>      emp.employee_name,
+. . . . . . . . . . . . . . . . . . . .>      emp.department_id
+. . . . . . . . . . . . . . . . . . . .>    FROM
+. . . . . . . . . . . . . . . . . . . .>     ${TBL_EMPLOYEE} as emp
+. . . . . . . . . . . . . . . . . . . .>    WHERE
+. . . . . . . . . . . . . . . . . . . .>      dt='2023-10-10'
+. . . . . . . . . . . . . . . . . . . .> ),
+. . . . . . . . . . . . . . . . . . . .> dept AS (
+. . . . . . . . . . . . . . . . . . . .>    SELECT
+. . . . . . . . . . . . . . . . . . . .>      dept.department_id,
+. . . . . . . . . . . . . . . . . . . .>      dept.department_name
+. . . . . . . . . . . . . . . . . . . .>    FROM
+. . . . . . . . . . . . . . . . . . . .>     ${TBL_DEPARTMENT} as dept
+. . . . . . . . . . . . . . . . . . . .>    WHERE
+. . . . . . . . . . . . . . . . . . . .>      dt='2023-10-10'
+. . . . . . . . . . . . . . . . . . . .> )
+. . . . . . . . . . . . . . . . . . . .> SELECT 
+. . . . . . . . . . . . . . . . . . . .>    emp.employee_id,
+. . . . . . . . . . . . . . . . . . . .>    emp.employee_name,
+. . . . . . . . . . . . . . . . . . . .>    dept.department_id,
+. . . . . . . . . . . . . . . . . . . .>    dept.department_name,
+. . . . . . . . . . . . . . . . . . . .>    sales.product_name,
+. . . . . . . . . . . . . . . . . . . .>    sales.sales_count,
+. . . . . . . . . . . . . . . . . . . .>    sales.sales_price,
+. . . . . . . . . . . . . . . . . . . .>    SUM(sales.sales_count + sales.sales_price) as total_sales,
+. . . . . . . . . . . . . . . . . . . .>    sales.dt as dt
+. . . . . . . . . . . . . . . . . . . .> FROM 
+. . . . . . . . . . . . . . . . . . . .>    emp
+. . . . . . . . . . . . . . . . . . . .> JOIN
+. . . . . . . . . . . . . . . . . . . .>    dept ON emp.department_id = dept.department_id
+. . . . . . . . . . . . . . . . . . . .> JOIN 
+. . . . . . . . . . . . . . . . . . . .>    ${TBL_SALES_INFO} as sales ON sales.employee_id = emp.employe e_id
+. . . . . . . . . . . . . . . . . . . .> WHERE
+. . . . . . . . . . . . . . . . . . . .>    dt='${dt}'
+. . . . . . . . . . . . . . . . . . . .> GROUP BY
+. . . . . . . . . . . . . . . . . . . .>    emp.employee_id,
+. . . . . . . . . . . . . . . . . . . .>    employee_name,
+. . . . . . . . . . . . . . . . . . . .>    dept.department_id,
+. . . . . . . . . . . . . . . . . . . .>    department_name,
+. . . . . . . . . . . . . . . . . . . .>    product_name,
+. . . . . . . . . . . . . . . . . . . .>    sales_count,
+. . . . . . . . . . . . . . . . . . . .>    sales_price,
+. . . . . . . . . . . . . . . . . . . .>    dt;
+emp.employee_id,emp.employee_name,dept.department_id,dept.department_name,sales.product_name,sales.sales_count,sales.sales_price,total_sales,dt
+0: jdbc:hive2://10.0.2.15:10000/default> 
