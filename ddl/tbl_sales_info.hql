@@ -1,15 +1,15 @@
-CREATE TABLE IF NOT EXISTS hive_shell_sample.sales_info (
+CREATE TABLE IF NOT EXISTS ${TBL_SALES_INFO} (
     employee_id INT,
     product_name STRING,
     sales_count INT,
     sales_price DOUBLE
 )
 PARTITIONED BY(dt STRING)
-COMMENT "EMPLOYEE TABLE"
 ROW FORMAT DELIMITED
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
-STORED AS TEXTFILE;
+STORED AS TEXTFILE
+TBLPROPERTIES ("transactional" = 'false');
 
 
 -- To support ACID, Hive tables should be created with TRANSACTIONAL table property.
