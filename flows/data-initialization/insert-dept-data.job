@@ -1,0 +1,6 @@
+type=command
+user.to.proxy=hadoop
+dependencies=create-dept-table
+command=bash -c "sh ${SRC_FILE_FOLDER}/exe_load_data_to_table.sh department departments dt ${DT_FOR_BASIC_DATA}"
+retries=0
+retry.backoff=0

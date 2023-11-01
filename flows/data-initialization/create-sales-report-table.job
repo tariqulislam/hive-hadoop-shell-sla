@@ -1,0 +1,6 @@
+type=command
+user.to.proxy=hadoop
+dependencies=create-sales-table
+command=bash -c "sh ${SRC_FILE_FOLDER}/exe_create_table.sh sales_report"
+retries=0
+retry.backoff=0

@@ -1,0 +1,6 @@
+type=command
+user.to.proxy=hadoop
+dependencies=create-database
+command=bash -c "sh ${SRC_FILE_FOLDER}/create-dept-table.sh departments"
+retries=0
+retry.backoff=0

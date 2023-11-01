@@ -1,0 +1,5 @@
+type=command
+user.to.proxy=hadoop
+command=bash -c "sh ${SRC_FILE_FOLDER}/exe_process_sales_report.sh sales_info_${dt} sales_info dt ${dt}"
+retries=0
+retry.backoff=0
