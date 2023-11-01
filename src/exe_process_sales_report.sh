@@ -19,52 +19,31 @@ function main {
        exit 1;
     fi
 
-    
     local _HOST_IP="10.0.2.15:10000/default"
     local _HIVE_USER_NAME=hadoop
     local _HIVE_PASSWORD=ronnie01
     local _OUTPUT_FORMAT=csv2
-    local _HQL_FILE_PATH=${app_root_dir}/dml/generate_sales_report.hql
-    local _EXPORT_TO=${app_root_dir}/reports
-    local _EXPORT_FILE=${_EXPORT_TO}/gen_sales_report_${_dt}.csv
-    local _TBL_SALES_REPORT=hive_shell_sample.sales_report
+    local _HQL_FILE_PATH=${app_root_dir}/dml/process_sales_report.hql
     
-    # sed 's/[\t]/,/g'
-    # sed '/^[[:space:]]*$/d'
-    # sed -i '/^$/d'
-   inform "[CMD]  beeline -u jdbc:hive2://${_HOST_IP} \
+    inform "[CMD] beeline -u jdbc:hive2://${_HOST_IP} \
      -n ${_HIVE_USER_NAME} \
-     -p ${_HIVE_PASSWORD} \
-     -i ${_hive_config_file} \
-     --outputformat=csv2 \
-     --verbose=false \
-     --showHeader=true \
-     --silent=true \
-     --fastConnect=true \
+     -p ${_HIVE_PASSWORD}  \
      --hivevar dt=${_dt} \
-     -f ${_HQL_FILE_PATH} |  sed '/^$/d' > ${_EXPORT_FILE}"
+     -f ${_HQL_FILE_PATH}"
 
-   beeline -u jdbc:hive2://${_HOST_IP} \
+    beeline -u jdbc:hive2://${_HOST_IP} \
      -n ${_HIVE_USER_NAME} \
-     -p ${_HIVE_PASSWORD} \
+     -p ${_HIVE_PASSWORD}  \
      -i ${_hive_config_file} \
-     --outputformat=csv2 \
-     --verbose=false \
-     --showHeader=true \
-     --silent=true \
-     --fastConnect=true \
      --hivevar dt=${_dt} \
-     -f ${_HQL_FILE_PATH} |  sed '/^$/d' > ${_EXPORT_FILE} ||
-     {
+     -f ${_HQL_FILE_PATH} || {
         error "Something Went Wrong During Generating Report Please see the logs";
         exit 1;
       }
-
-
+    
     # Check the Date function
     inform "Report Generated Successfully.";
     inform "[OP ] END"
     
 }
 main "${@}"
-

@@ -1,0 +1,5 @@
+employe id,employee name,department id,department name,product name,sales count,sales price,total sales
+101,kelli,102,HR,BANANA,30,140.0,4200.0
+101,kelli,102,HR,ICE CREAM,30,120.1,3603.0
+102,jordan,103,DEVELOPMENT,ICE CREAM,20,120.1,2402.0
+103,ram,104,PAYROLL,MANGO,10,600.0,6000.0

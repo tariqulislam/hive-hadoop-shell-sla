@@ -1,5 +1,5 @@
 INSERT OVERWRITE TABLE ${TBL_SALES_REPORT} 
-PARTITION (dt=${dt})
+PARTITION (dt='${dt}')
 SELECT * FROM (
 WITH emp AS (
 SELECT
@@ -28,8 +28,7 @@ SELECT
    sales.product_name,
    SUM(sales.sales_count) as sales_count,
    sales.sales_price,
-   SUM(sales.sales_count + sales.sales_price) as total_sales,
-   sales.dt as dt
+   SUM(sales.sales_count * sales.sales_price) as total_sales
 FROM 
    emp
 JOIN
@@ -37,7 +36,7 @@ JOIN
 JOIN 
    ${TBL_SALES_INFO} as sales ON sales.employee_id = emp.employee_id
 WHERE
-   dt='${dt}'
+   sales.dt='${dt}'
 GROUP BY
    emp.employee_id,
    employee_name,
@@ -46,5 +45,5 @@ GROUP BY
    product_name,
    sales_count,
    sales_price,
-   dt
-) AS SALES_INFO
+   sales.dt
+) AS SALES_INFO;

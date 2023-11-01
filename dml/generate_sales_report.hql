@@ -9,4 +9,4 @@ SELECT
     total_sales as  `Total Sales`
 FROM 
    ${TBL_SALES_REPORT}
-WHERE dt='${dt}'
+WHERE dt='${dt}';

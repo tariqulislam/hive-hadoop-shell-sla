@@ -1,4 +1,4 @@
- CREATE TABLE IF NOT EXISTS ${TBL_SEALS_REPORT} (
+CREATE TABLE IF NOT EXISTS ${TBL_SALES_REPORT} (
     employee_id INT,
     employee_name STRING,
     department_id INT,
